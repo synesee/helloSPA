@@ -1,0 +1,42 @@
+
+version: 0.2
+
+#$CODEBUILD_SRC_DIR is is a given env var
+
+env:
+  variables:
+    BUILD_ENV: "prod"
+phases:
+  install:
+    commands:
+      - echo "Upgrading NPM"
+      - npm install -g npm
+      - echo "Changing to Source Directory"
+      - cd src
+      - echo "Installing NPM dependencies"
+      - npm install --unsafe-perm
+      - echo "Installing Angular CLI"
+      - npm install -g --unsafe-perm @angular/cli@latest
+  pre_build:
+    commands:
+      - echo "pre-build commands..."
+      - "[[ -d ../src ]] || echo 'Missing src dir'"
+      - "[[ -d ../awsoptions ]] || echo 'Missing awsoptions dir'"
+      - "[[ -d ../package ]] || echo 'Missing package dir'"
+  build:
+    commands:
+      - echo "build command..."
+      - ng build --env=${BUILD_ENV}
+  post_build:
+    commands:
+      - echo "Changing back to Root Directory"
+      - cd ..
+      - echo $(du -sh ./src/dist/)
+      #      - zip -r ./package/src.zip .src/dist/*
+    #  - zip -r templates.zip ./transforms
+     # - zip -r package.zip . --exclude \*.git\* --exclude ./src --exclude ./transforms --exclude src.zip --exclude templates.zip
+artifacts:
+  files:
+    - ./src/dist/*
+  discard-paths: yes
+ #   - ./awsoptions/**/*
