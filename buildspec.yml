@@ -32,11 +32,13 @@ phases:
       - echo "Changing back to Root Directory"
       - cd ..
       - echo $(du -sh ./src/dist/)
+      - cp ./scaffolding/* ./package/
       #      - zip -r ./package/src.zip .src/dist/*
-    #  - zip -r templates.zip ./transforms
-     # - zip -r package.zip . --exclude \*.git\* --exclude ./src --exclude ./transforms --exclude src.zip --exclude templates.zip
+    #  - zip -r templates.zip ./scaffolding
+     # - zip -r package.zip . --exclude \*.git\* --exclude ./src --exclude ./scaffolding --exclude src.zip --exclude templates.zip
 artifacts:
   files:
     - ./src/dist/*
-  discard-paths: yes
+    - ./package/**/*
+ # discard-paths: yes
  #   - ./awsoptions/**/*
