@@ -1,0 +1,4 @@
+MemorySize: 1024
+ZipFile: console.log("hello world and goodby")
+Timeout: 25
+Mode: Active
