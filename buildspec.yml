@@ -29,8 +29,8 @@ phases:
       - ng build --env=${BUILD_ENV}
   post_build:
     commands:
-      - cp ./src/dist/* ./package
-      - echo $(du -sh ./dist/)
+      - cd src/dist && zip -r ../../package/src.zip * && cd ../..
+      - cp -r ./scaffolding/* ./package/
 artifacts:
   files:
     - ./package/**/*
