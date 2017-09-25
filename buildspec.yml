@@ -29,18 +29,8 @@ phases:
       - ng build --env=${BUILD_ENV}
   post_build:
     commands:
-#      - echo "Changing back to Root Directory"
-#      - cd ..
-#      - echo $(du -sh ./src/dist/)
+      - cp ./src/dist/* ./package
       - echo $(du -sh ./dist/)
-#      - cp ./scaffolding/* ./package/
-      #      - zip -r ./package/src.zip .src/dist/*
-    #  - zip -r templates.zip ./scaffolding
-     # - zip -r package.zip . --exclude \*.git\* --exclude ./src --exclude ./scaffolding --exclude src.zip --exclude templates.zip
 artifacts:
   files:
-#    - ./src/dist/*
-    - ./dist/*
-#    - ./package/**/*
- # discard-paths: yes
- #   - ./awsoptions/**/*
+    - ./package/**/*
