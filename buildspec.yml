@@ -12,7 +12,7 @@ phases:
       - echo "Upgrading NPM"
       - npm install -g npm
       - echo "Changing to Source Directory"
-#      - cd src
+      - cd src
       - echo "Installing NPM dependencies"
       - npm install --unsafe-perm
       - echo "Installing Angular CLI"
@@ -29,7 +29,8 @@ phases:
       - ng build --env=${BUILD_ENV}
   post_build:
     commands:
-      - cp -r ./dist/* ./package/
+      - cd..
+      - cp -r ./src/dist/* ./package/
       - cp -r ./scaffolding/* ./package/
 artifacts:
   files:
