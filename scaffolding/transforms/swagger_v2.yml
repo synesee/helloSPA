@@ -70,13 +70,13 @@ paths:
         schema:
           $ref: "#/definitions/hellomodel"
       responses:
-        200:
+        "200":
           description: "200 response"
-        201:
+        "201":
           description: "account helloed"
-        400:
+        "400":
           description: "invalid input, object invalid"
-        409:
+        "409":
           description: "hello already in progress"
       x-amazon-apigateway-request-validator: "Validate body"
       x-amazon-apigateway-integration:
