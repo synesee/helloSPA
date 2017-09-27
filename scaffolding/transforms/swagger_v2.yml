@@ -30,7 +30,7 @@ paths:
       produces:
       - "application/json"
       responses:
-        200:
+        "200":
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
@@ -50,7 +50,7 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
         requestTemplates:
-          application/json: "{\"statusCode\": \"200\"}"
+          application/json: "{\"statusCode\": 200}"
         passthroughBehavior: "when_no_match"
         type: "mock"
   /hello:
