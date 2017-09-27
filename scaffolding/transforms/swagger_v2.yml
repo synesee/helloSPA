@@ -1,109 +1,162 @@
-swagger: '2.0'
-info:
-  description: This is a simple API
-  version: 1.0.0
-  title: pro
-  # put the contact info for your development or API team
-  contact:
-    email: you@your-company.com
+---
+AWSTemplateFormatVersion: '2010-09-09'
 
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+Parameters:
+  PathPart:
+    Type: String
+    Default: "api"
+  DeployPath:
+    Type: String
+    Default: "/test/api"
+  LambdaArn:
+    Type: String
+    Default: "arn:aws:apigateway:us-east:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:654898573656:function:hello/invocations"
 
-# tags are used for organizing operations
-tags:
-- name: admins
-  description: Secured Admin-only calls
-- name: developers
-  description: Operations available to regular developers
-#basePath is the stage?
-basePath: "/test"
-schemes:
-- "https"
+Resources:
 
-paths:
-  /api:
-    options:
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-          headers:
-            Access-Control-Allow-Origin:
-              type: "string"
-            Access-Control-Allow-Methods:
-              type: "string"
-            Access-Control-Allow-Headers:
-              type: "string"
-      x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: "200"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Methods: "'OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-        requestTemplates:
-          application/json: "{\"statusCode\": 200}"
-        passthroughBehavior: "when_no_match"
-        type: "mock"
-  /hello:
-    post:
-      tags:
-      - admins
-      summary: hellos an account
-      description: Account ID to hello
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "hellomodel"
-        required: true
-        schema:
-          $ref: "#/definitions/hellomodel"
-      responses:
-        "200":
-          description: "200 response"
-        "201":
-          description: "account helloed"
-        "400":
-          description: "invalid input, object invalid"
-        "409":
-          description: "hello already in progress"
-      x-amazon-apigateway-request-validator: "Validate body"
-      x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: "200"
-        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:654898573656:function:hello/invocations"
-        passthroughBehavior: "when_no_match"
-        httpMethod: "POST"
-        contentHandling: "CONVERT_TO_TEXT"
-        type: "aws"
-definitions:
-  Empty:
-    type: "object"
-    title: "Empty Schema"
-  hellomodel:
-    type: "object"
-    properties:
-      accountid:
-        type: "string"
-      command:
-        type: "string"
-      project:
-        type: "string"
-x-amazon-apigateway-request-validators:
-  Validate body:
-    validateRequestParameters: false
-    validateRequestBody: false
+  Api:
+    Type: "AWS::ApiGateway::RestApi"
+    Properties:
+      Name: hello
+      Body:
+##########BEGIN SWAGGER##########
+        swagger: '2.0'
+        info:
+          version: 1.0.0
+          title: hello
+        tags:
+        - name: admins
+          description: Secured Admin-only calls
+        - name: developers
+          description: Operations available to regular developers
+        #basePath is the stage?
+        basePath: "/test"
+        schemes:
+        - "https"
 
+        paths:
+          /api:
+            options:
+              consumes:
+              - "application/json"
+              produces:
+              - "application/json"
+              responses:
+                "200":
+                  description: "200 response"
+                  schema:
+                    $ref: "#/definitions/Empty"
+                  headers:
+                    Access-Control-Allow-Origin:
+                      type: "string"
+                    Access-Control-Allow-Methods:
+                      type: "string"
+                    Access-Control-Allow-Headers:
+                      type: "string"
+              x-amazon-apigateway-integration:
+                responses:
+                  default:
+                    statusCode: "200"
+                    responseParameters:
+                      method.response.header.Access-Control-Allow-Methods: "'OPTIONS'"
+                      method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                      method.response.header.Access-Control-Allow-Origin: "'*'"
+                requestTemplates:
+                  application/json: "{\"statusCode\": 200}"
+                passthroughBehavior: "when_no_match"
+                type: "mock"
+          /hello:
+            post:
+              tags:
+              - admins
+              summary: hellos an account
+              description: Account ID to hello
+              consumes:
+              - "application/json"
+              produces:
+              - "application/json"
+              parameters:
+              - in: "body"
+                name: "hellomodel"
+                required: true
+                schema:
+                  $ref: "#/definitions/hellomodel"
+              responses:
+                "200":
+                  description: "200 response"
+                "201":
+                  description: "account helloed"
+                "400":
+                  description: "invalid input, object invalid"
+                "409":
+                  description: "hello already in progress"
+              x-amazon-apigateway-request-validator: "Validate body"
+              x-amazon-apigateway-integration:
+                responses:
+                  default:
+                    statusCode: "200"
+                uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:654898573656:function:hello/invocations"
+                passthroughBehavior: "when_no_match"
+                httpMethod: "POST"
+                contentHandling: "CONVERT_TO_TEXT"
+                type: "aws"
+        definitions:
+          Empty:
+            type: "object"
+            title: "Empty Schema"
+          hellomodel:
+            type: "object"
+            properties:
+              accountid:
+                type: "string"
+              command:
+                type: "string"
+              project:
+                type: "string"
+        x-amazon-apigateway-request-validators:
+          Validate body:
+            validateRequestParameters: false
+            validateRequestBody: false
+###########END SWAGGER###########
+  ApiDeployment:
+    Type: "AWS::ApiGateway::Deployment"
+    Properties:
+      RestApiId: !Ref Api
+      StageDescription:
+        MethodSettings:
+          -
+            HttpMethod: "*"
+            ResourcePath: "/*"
+            ThrottlingBurstLimit: 20
+            ThrottlingRateLimit: 5
+      StageName: dummy
 
+  ApiGatewayStageDev:
+    DependsOn:
+      - ApiDeployment
+    Type: "AWS::ApiGateway::Stage"
+    Properties:
+      DeploymentId: !Ref ApiDeployment
+      MethodSettings:
+        -
+          DataTraceEnabled: true
+          HttpMethod: "*"
+          LoggingLevel: INFO
+          ResourcePath: "/*"
+      RestApiId: !Ref Api
+      StageName: dev
+
+  ApiGatewayStageProd:
+    DependsOn:
+      - ApiDeployment
+    Type: "AWS::ApiGateway::Stage"
+    Properties:
+      DeploymentId: !Ref ApiDeployment
+      MethodSettings:
+        -
+          DataTraceEnabled: true
+          HttpMethod: "*"
+          LoggingLevel: INFO
+          ResourcePath: "/*"
+      RestApiId: !Ref Api
+      StageName: prod
