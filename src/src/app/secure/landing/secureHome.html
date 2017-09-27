@@ -1,0 +1,66 @@
+<md-toolbar color="primary">
+  <img src="https://www.sans.org/images/design-site/logo-footer.png">
+  <span>Cognito Seed App</span>
+  <button md-icon-button [mdMenuTriggerFor]="menu">
+    <md-icon>account_box</md-icon>
+  </button>
+</md-toolbar>
+
+<md-sidenav-container class="sidenav-container">
+  <md-sidenav #sidenav class="sidenav" mode="side" opened="true" gutterSize="10px">
+    <md-nav-list>
+      <md-list-item>
+<!--        <button md-button routerLink="dashboard">
+          <md-icon>dashboard</md-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dashboard
+        </button> -->
+      </md-list-item>
+      <BR />
+<!--
+      <hr>
+      <md-list-item>
+        <button md-button routerLink="accountdetail">
+          <md-icon>subdirectory_arrow_right</md-icon>&nbsp;&nbsp;Account Detail
+        </button>
+      </md-list-item>
+-->
+<!--      <md-list-item>
+        <button md-icon-button routerLink="accountdetail">
+          <md-icon>cloud_circle</md-icon>Account Detail
+        </button>
+      </md-list-item> -->
+    </md-nav-list>
+  </md-sidenav>
+  <div class="sidenav-content">
+    <md-card>
+      <router-outlet></router-outlet>
+    </md-card>
+    <!--
+        <md-grid-list cols="1" gutterSize="10px">
+
+
+          <md-grid-tile>
+            <add-account-form></add-account-form>
+          </md-grid-tile>
+
+         <md-grid-tile>
+            <app-accounts-dash></app-accounts-dash>
+          </md-grid-tile>
+          <md-grid-tile>
+            <app-accounts-list></app-accounts-list>
+          </md-grid-tile>
+
+          <md-grid-tile>
+            <app-microserv-list></app-microserv-list>
+          </md-grid-tile>
+
+    </md-grid-list>
+    -->
+  </div>
+</md-sidenav-container>
+<md-menu #menu="mdMenu" xPosition="before" yPosition="below" [overlapTrigger]="false">
+<!--  <button md-menu-item [routerLink]="['/securehome/myprofile']" >email@sans.org</button> -->
+  <button md-menu-item [routerLink]="['/securehome/logout']">
+    <md-icon> exit_to_app </md-icon>
+    <span> Logoff </span>
+  </button>
+</md-menu>

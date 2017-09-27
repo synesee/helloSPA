@@ -1,0 +1,19 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  min-width: 800px;
+  align: center;
+}
+
+.cardwidth {
+  width: 600px;
+}
+
+.formwidth {
+  width: 500px;
+}
+
+.fullwidth {
+  width: 100%;
+}

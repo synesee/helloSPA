@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "https://fonts.googleapis.com/css?family=Material+Icons";
+@import "https://fonts.googleapis.com/css?family=Roboto:400,300";
+
+
+html, body, md-sidenav-container, .my-content {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+md-sidenav {
+  width: 200px;
+}
+
+md-toolbar-row {
+  justify-content: space-between;
+}
+md-list-item {
+  height: auto !important;
+}
+
+.sidenav-container {
+  min-height: 800px;
+  display: flex;
+}
+
+.sidenav-content {
+  padding: 4%;
+}
+
+.sidenav {
+  padding: 20px;
+}
