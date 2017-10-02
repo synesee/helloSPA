@@ -30,7 +30,7 @@ phases:
   post_build:
     commands:
       - cd ..
-      - cp -r ./dist/* ./package/
+      - cp -r ./src/dist/* ./package/
       - cp -r ./scaffolding/* ./package/
 artifacts:
   files:
