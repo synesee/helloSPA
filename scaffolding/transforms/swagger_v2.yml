@@ -8,9 +8,8 @@ Parameters:
   DeployPath:
     Type: String
     Default: "/test/api"
-  LambdaArn:
+  Repo:
     Type: String
-    Default: "arn:aws:apigateway:us-east:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:654898573656:function:hello/invocations"
 
 Resources:
 
@@ -95,7 +94,7 @@ Resources:
                 responses:
                   default:
                     statusCode: "200"
-                uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:654898573656:function:hello/invocations"
+                uri: !Join ["",["arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:",!Ref AWS::Accountid,":function:",!Ref Repo","/invocations"]]
                 passthroughBehavior: "when_no_match"
                 httpMethod: "POST"
                 contentHandling: "CONVERT_TO_TEXT"
