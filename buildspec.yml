@@ -1,4 +1,3 @@
-
 version: 0.2
 
 #$CODEBUILD_SRC_DIR is is a given env var
@@ -12,7 +11,7 @@ phases:
       - echo "Upgrading NPM"
       - npm install -g npm
       - echo "Changing to Source Directory"
-#      - cd src
+      - cd src
       - echo "Installing NPM dependencies"
       - npm install --unsafe-perm
       - echo "Installing Angular CLI"
