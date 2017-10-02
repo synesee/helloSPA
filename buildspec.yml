@@ -34,7 +34,7 @@ phases:
       - cp -r ./scaffolding/* ./package/
       - mv ./* ../
       - cd ../
-      - rm -rf ../$CODEBUILD_SRC_DIR
+
 artifacts:
   files:
-    - package/**/*
+    - ../package/**/*
