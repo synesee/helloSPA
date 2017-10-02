@@ -33,4 +33,4 @@ phases:
       - cp -r ./scaffolding/* ./package/
 artifacts:
   files:
-    - ./package/**/*
+    - ../package/**/*
