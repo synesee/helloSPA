@@ -1,14 +1,14 @@
-roleServiceList: |
+RoleServiceList: |
   lambda.amazonaws.com,
   codebuild.amazonaws.com,
   apigateway.amazonaws.com,
   ec2.amazonaws.com,
   s3.amazonaws.com,
   ses.amazonaws.com
-policyActionList: |
+PolicyActionList: |
   ec2:*,
   xray:*,
-  lambda:*,
+  Lambda:*,
   dynamodb:*,
   apigateway:*,
   s3:*,
@@ -16,8 +16,4 @@ policyActionList: |
   logs:*,
   sns:*,
   ses:*,
-  kms:Encrypt,
-  kms:Decrypt,
-  kms:ReEncrypt*,
-  kms:GenerateDataKey*,
-  kms:DescribeKey
+  kms:*

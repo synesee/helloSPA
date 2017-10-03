@@ -1,0 +1,5 @@
+PrimaryKey: Repo
+secondaryKey: AccountEmailAddress
+SecondaryIndexName: AccountByEmailAddress
+PrimaryKeyType: S
+SecondaryKeyType: S

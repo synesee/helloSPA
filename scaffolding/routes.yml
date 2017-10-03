@@ -1,9 +1,0 @@
-#microservice name:
-#    - microservice that is subscribed
-
-microservice3:
-  - microservice2
-  - microservice1
-
-microservice4:
-  - microservice3

@@ -8,9 +8,14 @@ Parameters:
   DeployPath:
     Type: String
     Default: "/test/api"
+  RoleArn:
+    Type: String
 
 Resources:
-
+ApiGatewayAccount:
+  Type: "AWS::ApiGateway::Account",
+  Properties:
+    CloudWatchRoleArn: !Ref RoleArn
   Api:
     Type: "AWS::ApiGateway::RestApi"
     Properties:
@@ -26,69 +31,6 @@ Resources:
         schemes:
         - "https"
         paths:
-          /api/provision:
-            post:
-              consumes:
-              - "application/json"
-              produces:
-              - "application/json"
-              parameters:
-              - in: "body"
-                name: "provisioninput"
-                required: true
-                schema:
-                  $ref: "#/definitions/provisioninput"
-              responses:
-                "200":
-                  description: "200 response"
-                  schema:
-                    $ref: "#/definitions/Empty"
-                  headers:
-                    Access-Control-Allow-Origin:
-                      type: "string"
-              x-amazon-apigateway-integration:
-                responses:
-                  default:
-                    statusCode: "200"
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Origin: "'*'"
-                uri:
-                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:provision/invocations"
-                passthroughBehavior: "when_no_match"
-                httpMethod: "POST"
-                contentHandling: "CONVERT_TO_TEXT"
-                type: "aws"
-                requestParameters:
-                  "integration.request.header.X-Amz-Invocation-Type": "'Event'"
-            options:
-              consumes:
-              - "application/json"
-              produces:
-              - "application/json"
-              responses:
-                "200":
-                  description: "200 response"
-                  schema:
-                    $ref: "#/definitions/Empty"
-                  headers:
-                    Access-Control-Allow-Origin:
-                      type: "string"
-                    Access-Control-Allow-Methods:
-                      type: "string"
-                    Access-Control-Allow-Headers:
-                      type: "string"
-              x-amazon-apigateway-integration:
-                responses:
-                  default:
-                    statusCode: "200"
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-                      method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-                      method.response.header.Access-Control-Allow-Origin: "'*'"
-                requestTemplates:
-                  application/json: "{\"statusCode\": 200}"
-                passthroughBehavior: "when_no_match"
-                type: "mock"
           /api/deploy:
             post:
               consumes:
@@ -155,51 +97,6 @@ Resources:
           Empty:
             type: "object"
             title: "Empty Schema"
-          provisioninput:
-            type: "object"
-            properties:
-             body:
-                type: "object"
-                properties:
-                  acctId:
-                    type: "string"
-                    description: "An explanation about the purpose of this instance."
-                    title: "The acctid schema"
-                    default: "123456"
-                  deployment:
-                    type: "string"
-                    description: "An explanation about the purpose of this instance."
-                    title: "The deployment schema"
-                    default: "prod"
-                  exec:
-                    type: "string"
-                    description: "An explanation about the purpose of this instance."
-                    title: "The exec schema"
-                    default: "default"
-                  templateurl:
-                    type: "string"
-                    description: "https URl of the template used to create a changeset."
-                    default: "default"
-                  "parameters": {
-                    "items": {
-                      "properties": {
-                        "ParameterKey": {
-                          "default": "deployStackName",
-                          "description": "An explanation about the purpose of this instance.",
-                          "title": "The parameterkey schema",
-                          "type": "string"
-                        },
-                        "ParameterValue": {
-                          "default": "myteststack",
-                          "description": "An explanation about the purpose of this instance.",
-                          "title": "The parametervalue schema",
-                          "type": "string"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "type": "array"
-                  }
           deployinput:
             type: "object"
             properties:
