@@ -294,8 +294,6 @@ Resources:
       StageName: dummy
 
   ApiGatewayStageDev:
-    DependsOn:
-      - ApiDeployment
     Type: "AWS::ApiGateway::Stage"
     Properties:
       DeploymentId: !Ref ApiDeployment
@@ -309,8 +307,6 @@ Resources:
       StageName: dev
 
   ApiGatewayStageProd:
-    DependsOn:
-      - ApiDeployment
     Type: "AWS::ApiGateway::Stage"
     Properties:
       DeploymentId: !Ref ApiDeployment
@@ -323,8 +319,6 @@ Resources:
       RestApiId: !Ref Api
       StageName: prod
   ApiGatewayStageHuff:
-    DependsOn:
-      - ApiDeployment
     Type: "AWS::ApiGateway::Stage"
     Properties:
       DeploymentId: !Ref ApiDeployment
