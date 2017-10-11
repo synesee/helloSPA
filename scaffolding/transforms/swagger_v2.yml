@@ -255,15 +255,3 @@ Resources:
           ResourcePath: "/*"
       RestApiId: !Ref Api
       StageName: prod
-  ApiGatewayStageHuff:
-    Type: "AWS::ApiGateway::Stage"
-    Properties:
-      DeploymentId: !Ref ApiDeployment
-      MethodSettings:
-        -
-          DataTraceEnabled: true
-          HttpMethod: "*"
-          LoggingLevel: INFO
-          ResourcePath: "/*"
-      RestApiId: !Ref Api
-      StageName: huff
