@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/delay';
 
-import aws4 from 'aws4';
 import { CognitoUtil } from './cognito.service';
 
 @Injectable()
@@ -21,12 +20,12 @@ export class ApigwService {
     console.log('Body Params' + JSON.stringify(body));
     console.log('Options Params' + JSON.stringify(options));
 
- //   var pathArray = requestParams.url.split('/');
- //   var host = pathArray[2];
- //   var path = pathArray.slice(3).join('/');
- //   path = '/' + path;
- //   requestParams.host = host;
- //   requestParams.path = path;
+    //   var pathArray = requestParams.url.split('/');
+    //   var host = pathArray[2];
+    //   var path = pathArray.slice(3).join('/');
+    //   path = '/' + path;
+    //   requestParams.host = host;
+    //   requestParams.path = path;
     const httpClient = this.httpClient;
     const cognitoUser = this.cognitoUtil.getCurrentUser();
 
@@ -41,26 +40,36 @@ export class ApigwService {
           const idToken = session.getIdToken().getJwtToken();
           console.log(JSON.stringify(idToken));
 
-            // ok, we are ready to make our call as long as we have an idToken
-          httpClient
-            .post(options.url, body, {
-              headers: new HttpHeaders().set('Authorization', idToken),
-            })
-            .subscribe();
+          if (options.method === 'GET') {
+            httpClient
+              .get(options.url, {
+                headers: new HttpHeaders().set('Authorization', idToken),
+              })
+              .subscribe();
+          } else {
+            httpClient
+              .post(options.url, body, {
+                headers: new HttpHeaders().set('Authorization', idToken),
+              })
+              .subscribe();
+          }
+
+          // ok, we are ready to make our call as long as we have an idToken
+
 
 
 
 //            var creds = this.cognitoUtil.buildCognitoCreds(idToken);
 
-/*          session.getIdToken().getJwtToken(function (err, result) {
-            if (err) {
-              console.log('UserParametersService: in getParameters: ' + err);
-            } else {
-//              callback.callbackWithParam(result);
-              console.log('Cognito User Results:' + JSON.stringify(result));
-            }
-          });
-*/
+          /*          session.getIdToken().getJwtToken(function (err, result) {
+           if (err) {
+           console.log('UserParametersService: in getParameters: ' + err);
+           } else {
+           //              callback.callbackWithParam(result);
+           console.log('Cognito User Results:' + JSON.stringify(result));
+           }
+           });
+           */
         }
 
       });
@@ -68,62 +77,62 @@ export class ApigwService {
 //      callback.callbackWithParam(null);
       console.log('Cognito User Null');
     }
-/*
-    for (let i = 0; i < result.length; i++) {
-      let parameter = new Parameters();
-      parameter.name = result[i].getName();
-      parameter.value = result[i].getValue();
-      this.me.parameters.push(parameter);
-    }
-    let param = new Parameters()
-    param.name = "cognito ID";
-    param.value = this.cognitoUtil.getCognitoIdentity();
-    this.me.parameters.push(param)
+    /*
+     for (let i = 0; i < result.length; i++) {
+     let parameter = new Parameters();
+     parameter.name = result[i].getName();
+     parameter.value = result[i].getValue();
+     this.me.parameters.push(parameter);
+     }
+     let param = new Parameters()
+     param.name = "cognito ID";
+     param.value = this.cognitoUtil.getCognitoIdentity();
+     this.me.parameters.push(param)
 
 
-    if (sessionStorage.getItem('awsCredentials') != null) {
-      const awsCredentials = JSON.parse(sessionStorage.getItem('awsCredentials'));
+     if (sessionStorage.getItem('awsCredentials') != null) {
+     const awsCredentials = JSON.parse(sessionStorage.getItem('awsCredentials'));
 
-      let signedRequest = aws4.sign(requestParams,
-        {
-          secretAccessKey: awsCredentials.secretAccessKey,
-          accessKeyId: awsCredentials.accessKeyId,
-          sessionToken: awsCredentials.sessionToken
-        });
+     let signedRequest = aws4.sign(requestParams,
+     {
+     secretAccessKey: awsCredentials.secretAccessKey,
+     accessKeyId: awsCredentials.accessKeyId,
+     sessionToken: awsCredentials.sessionToken
+     });
 
-      delete signedRequest.headers['Host'];
-      delete signedRequest.headers['Content-Length'];
+     delete signedRequest.headers['Host'];
+     delete signedRequest.headers['Content-Length'];
 
-      console.log(signedRequest);
-
-
-
-      signedRequest.data = signedRequest.body;
-*/
-
-/*
-      return axios(signedRequest)
-        .then((response) => {
-          return response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-          throw error;
-        });
-
-    } else {
-
-      let unsignedRequest = requestParams.url;
-      if(requestParams.method == 'GET') {
-        return axios.get(unsignedRequest);
-      }
-      else if(requestParams.method == 'POST') {
-        return axios.post(unsignedRequest);
-      }
+     console.log(signedRequest);
 
 
-    }
-*/
+
+     signedRequest.data = signedRequest.body;
+     */
+
+    /*
+     return axios(signedRequest)
+     .then((response) => {
+     return response.data;
+     })
+     .catch(function (error) {
+     console.log(error);
+     throw error;
+     });
+
+     } else {
+
+     let unsignedRequest = requestParams.url;
+     if(requestParams.method == 'GET') {
+     return axios.get(unsignedRequest);
+     }
+     else if(requestParams.method == 'POST') {
+     return axios.post(unsignedRequest);
+     }
+
+
+     }
+     */
   }
 
 }
