@@ -4,6 +4,7 @@ import {Callback, CognitoUtil, LoggedInCallback} from '../../service/cognito.ser
 import {UserParametersService} from '../../service/user-parameters.service';
 import {Router} from '@angular/router';
 
+import { ApigwService } from '../../service/apigw.service';
 
 @Component({
     selector: 'awscognito-angular2-app',
@@ -14,7 +15,7 @@ export class MyProfileComponent implements LoggedInCallback {
     public parameters: Array<Parameters> = [];
     public cognitoId: String;
 
-    constructor(public router: Router, public userService: UserLoginService, public userParams: UserParametersService, public cognitoUtil: CognitoUtil) {
+    constructor(public router: Router, public userService: UserLoginService, public userParams: UserParametersService, public cognitoUtil: CognitoUtil, public apigw: ApigwService) {
         this.userService.isAuthenticated(this);
         console.log('In MyProfileComponent');
     }
@@ -26,6 +27,24 @@ export class MyProfileComponent implements LoggedInCallback {
             this.userParams.getParameters(new GetParametersCallback(this, this.cognitoUtil));
         }
     }
+
+    onSubmit() {
+      var options = {
+        url: 'https://yqqd1uhx47.execute-api.us-east-1.amazonaws.com/dev/demo/',
+        method: 'GET'
+      };
+      /*
+      var options = {
+        url: 'https://5k1rpevt6g.execute-api.us-east-1.amazonaws.com/dev/accounts',
+        method: 'GET'
+      };
+      */
+      var value = "";
+
+      this.apigw.restRequest(options, value);
+
+    }
+
 }
 
 export class Parameters {
