@@ -292,30 +292,6 @@ Resources:
             ThrottlingBurstLimit: 20
             ThrottlingRateLimit: 5
       StageName: dummy
-  ApiDev:
-    Type: "AWS::ApiGateway::Deployment"
-    Properties:
-      RestApiId: !Ref Api
-      StageDescription:
-        MethodSettings:
-          -
-            HttpMethod: "*"
-            ResourcePath: "/*"
-            ThrottlingBurstLimit: 20
-            ThrottlingRateLimit: 5
-      StageName: dev
-  ApiProd:
-    Type: "AWS::ApiGateway::Deployment"
-    Properties:
-      RestApiId: !Ref Api
-      StageDescription:
-        MethodSettings:
-          -
-            HttpMethod: "*"
-            ResourcePath: "/*"
-            ThrottlingBurstLimit: 20
-            ThrottlingRateLimit: 5
-      StageName: prod
   ApiGatewayStageDev:
     Type: "AWS::ApiGateway::Stage"
     Properties:
@@ -328,7 +304,6 @@ Resources:
           ResourcePath: "/*"
       RestApiId: !Ref Api
       StageName: dev
-
   ApiGatewayStageProd:
     Type: "AWS::ApiGateway::Stage"
     Properties:
