@@ -4,115 +4,129 @@ AWSTemplateFormatVersion: '2010-09-09'
 Parameters:
   PathPart:
     Type: String
-    Default: "api"
+    Default: "spaapi"
   DeployPath:
     Type: String
-    Default: "/test/api"
-  RoleArn:
+    Default: "/spa/api"
+  LambdaArn:
     Type: String
+    Default: "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:SpaAPIGWTest"
 
 Resources:
-ApiGatewayAccount:
-  Type: "AWS::ApiGateway::Account",
-  Properties:
-    CloudWatchRoleArn: !Ref RoleArn
+  lambdaPermissionsApi:
+    Type: "AWS::Lambda::Permission"
+    Properties:
+      Action: "lambda:*"
+      FunctionName: !Ref LambdaArn
+      Principal: "apigateway.amazonaws.com"
   Api:
     Type: "AWS::ApiGateway::RestApi"
     Properties:
-      Name: test
+      Name: HelloAPI
       Body:
 ##########BEGIN SWAGGER##########
-        swagger: "2.0"
+        swagger: '2.0'
         info:
-          version: "2017-09-02T19:53:46Z"
-          title: "awsdevportal"
-        host: "awsdevportal.synesee.com"
-        basePath: "/dev"
+          version: '0.0.1'
+          title: "Hello App Cognito APIGW Angular"
+        basePath: /api
         schemes:
-        - "https"
+          - https
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        securityDefinitions:
+          myApiUsers:
+            type: "apiKey"
+            name: "Authorization"
+            in: "header"
+            x-amazon-apigateway-authtype: "cognito_user_pools"
+            x-amazon-apigateway-authorizer:
+              providerARNs:
+                - "arn:aws:cognito-idp:us-east-1:744864561182:userpool/us-east-1_KuXacXoZM"
+              type: "cognito_user_pools"
         paths:
-          /api/deploy:
-            post:
-              consumes:
-              - "application/json"
-              produces:
-              - "application/json"
-              parameters:
-              - in: "body"
-                name: "deployinput"
-                required: true
-                schema:
-                  $ref: "#/definitions/deployinput"
-              responses:
-                "200":
-                  description: "200 response"
-                  schema:
-                    $ref: "#/definitions/Empty"
-                  headers:
-                    Access-Control-Allow-Origin:
-                      type: "string"
-              x-amazon-apigateway-integration:
-                responses:
-                  default:
-                    statusCode: "200"
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Origin: "'*'"
-                uri:
-                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:deploy/invocations"
-                passthroughBehavior: "when_no_match"
-                httpMethod: "POST"
-                contentHandling: "CONVERT_TO_TEXT"
-                type: "aws"
+          # ===============================================
+          /demo:
+          # ===============================================
             options:
-              consumes:
-              - "application/json"
-              produces:
-              - "application/json"
-              responses:
-                "200":
-                  description: "200 response"
-                  schema:
-                    $ref: "#/definitions/Empty"
-                  headers:
-                    Access-Control-Allow-Origin:
-                      type: "string"
-                    Access-Control-Allow-Methods:
-                      type: "string"
-                    Access-Control-Allow-Headers:
-                      type: "string"
-              x-amazon-apigateway-integration:
-                responses:
-                  default:
-                    statusCode: "200"
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-                      method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-                      method.response.header.Access-Control-Allow-Origin: "'*'"
-                requestTemplates:
-                  application/json:  "#set($allParams = $input.params())\r\n{\r\n\"body-json\" : $input.json('$'),\r\n\"params\" : {\r\n#foreach($type in $allParams.keySet())\r\n    #set($params = $allParams.get($type))\r\n\"$type\" : {\r\n    #foreach($paramName in $params.keySet())\r\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\r\n        #if($foreach.hasNext),#end\r\n    #end\r\n}\r\n    #if($foreach.hasNext),#end\r\n#end\r\n},\r\n\"stage-variables\" : {\r\n#foreach($key in $stageVariables.keySet())\r\n\"$key\" : \"$util.escapeJavaScript($stageVariables.get($key))\"\r\n    #if($foreach.hasNext),#end\r\n#end\r\n},\r\n\"context\" : {\r\n    \"account-id\" : \"$context.identity.accountId\",\r\n    \"api-id\" : \"$context.apiId\",\r\n    \"api-key\" : \"$context.identity.apiKey\",\r\n    \"authorizer-principal-id\" : \"$context.authorizer.principalId\",\r\n    \"caller\" : \"$context.identity.caller\",\r\n    \"cognito-authentication-provider\" : \"$context.identity.cognitoAuthenticationProvider\",\r\n    \"cognito-authentication-type\" : \"$context.identity.cognitoAuthenticationType\",\r\n    \"cognito-identity-id\" : \"$context.identity.cognitoIdentityId\",\r\n    \"cognito-identity-pool-id\" : \"$context.identity.cognitoIdentityPoolId\",\r\n    \"http-method\" : \"$context.httpMethod\",\r\n    \"stage\" : \"$context.stage\",\r\n    \"source-ip\" : \"$context.identity.sourceIp\",\r\n    \"user\" : \"$context.identity.user\",\r\n    \"user-agent\" : \"$context.identity.userAgent\",\r\n    \"user-arn\" : \"$context.identity.userArn\",\r\n    \"request-id\" : \"$context.requestId\",\r\n    \"resource-id\" : \"$context.resourceId\",\r\n    \"resource-path\" : \"$context.resourcePath\"\r\n    }\r\n}"
-                  #application/json: "{\"statusCode\": 200}"
-                passthroughBehavior: "when_no_match"
-                type: "mock"
+            # ============================================
+               summary: "CORS Support"
+               description: "Enable CORS Support"
+               responses:
+                  "200":
+                     description: "200-OK for OPTIONS"
+                     schema:
+                        $ref: "#/definitions/Empty"
+                     headers:
+                        Access-Control-Allow-Headers:
+                           type: "string"
+                        Access-Control-Allow-Methods:
+                           type: "string"
+                        Access-Control-Allow-Origin:
+                           type: "string"
+               x-amazon-apigateway-integration:
+                  type: "mock"
+                  passthroughBehavior: "when_no_match"
+                  requestTemplates:
+                     application/json: |
+                        {
+                           "statusCode": 200
+                        }
+                  responses:
+                     "default":
+                        statusCode: "200"
+                        responseParameters:
+                           method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                           method.response.header.Access-Control-Allow-Methods: "'*'"
+                           method.response.header.Access-Control-Allow-Origin : "'*'"
+                        responseTemplates:
+                           application/json: |
+                              {}
+
+            get:
+            # ============================================
+               description: "List of Demo Elements"
+               parameters:
+                  -
+                     name: "Authorization"
+                     in: "header"
+                     required: false
+                     type: "string"
+               security:
+                  - myApiUsers: []
+               responses:
+                  "200":
+                     description: "200-OK response"
+                     schema:
+                        $ref: "#/definitions/Empty"
+                     headers:
+                        Access-Control-Allow-Headers:
+                           type: "string"
+                        Access-Control-Allow-Methods:
+                           type: "string"
+                        Access-Control-Allow-Origin:
+                           type: "string"
+               x-amazon-apigateway-integration:
+                  responses:
+                     "default":
+                        statusCode: "200"
+                        responseParameters:
+                           method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                           method.response.header.Access-Control-Allow-Methods: "'*'"
+                           method.response.header.Access-Control-Allow-Origin : "'*'"
+                  uri:
+                    Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:SpaAPIGWTest/invocations"
+                  passthroughBehavior: "when_no_match"
+                  httpMethod: "POST"
+                  contentHandling: "CONVERT_TO_TEXT"
+                  type: "aws"
         definitions:
           Empty:
             type: "object"
             title: "Empty Schema"
-          deployinput:
-            type: "object"
-            properties:
-              body:
-                type: "object"
-                properties:
-                  deployment:
-                    default: "dev"
-                    description: "An explanation about the purpose of this instance."
-                    title: "The deployment schema"
-                    type: "string"
-                  status:
-                    default: "provisioned"
-                    description: "An explanation about the purpose of this instance."
-                    title: "The status schema"
-                    type: "string"
+
 ###########END SWAGGER###########
   ApiDeployment:
     Type: "AWS::ApiGateway::Deployment"
