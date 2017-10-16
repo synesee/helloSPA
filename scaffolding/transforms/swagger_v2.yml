@@ -5,9 +5,11 @@ Parameters:
   PathPart:
     Type: String
     Default: "api"
+
   DeployPath:
     Type: String
     Default: "/test/api"
+
   CognitoId:
     Type: String
 
@@ -38,7 +40,7 @@ Resources:
             x-amazon-apigateway-authtype: "cognito_user_pools"
             x-amazon-apigateway-authorizer:
               providerARNs:
-                - !Join ["","arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/",!Ref CognitoId]]
+                - !Ref CognitoId
               type: "cognito_user_pools"
         paths:
           # ===============================================
