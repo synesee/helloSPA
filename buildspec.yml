@@ -32,6 +32,9 @@ phases:
       - mkdir ./package/swagger-ui
       - cp -r ./src/src/swagger-ui/* ./package/swagger-ui/
       - sed  -n '/BEGIN SWAGGER/,/END SWAGGER/{/END SWAGGER/!p}' ./scaffolding/transforms/swagger_v2.yml > ./package/swagger-ui/swagger.yml
+      - export s='!Ref CognitoId'
+      - "export r=$(aws cognito-idp list-user-pools --max-results=1 | grep Id | sed 's#\"Id\": \".##' | sed 's#\",.##')"
+      - sed -i "s/$s/$r/g" *
       - cp -r ./src/dist/* ./package/
       - cp -r ./scaffolding/* ./package/
 artifacts:
