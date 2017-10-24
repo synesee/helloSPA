@@ -1,36 +1,11 @@
-ClientId:
-  Type: String
-UserPoolId:
-  Type: String
-AllowedOAuthFlowsUserPoolClient: 
-  Type: String
-  Default: 'True'
-AllowedOAuthScopes:
-  Type: CommaDelimitedList
-  Default: ''
-CallbackURLs: 
-  Type: CommaDelimitedList
-  Default: 'https://localhost:4200'
-ClientName:
-  Type: String
-DefaultRedirectURI: 
-  Type: String
-  Default: 'https://localhost:4200'
-LogoutURLs: 
-  Type: CommaDelimitedList
-  Default: 'https://localhost:4200'
-ReadAttributes:
-  Type: CommaDelimitedList
-  Default: ''
-RefreshTokenValidity: 
-  Type: String
-  Default: '0'
-SupportedIdentityProviders:
-  Type: CommaDelimitedList
-  Default: 'idp,auth0'
-WriteAttributes: 
-  Type: CommaDelimitedList
-  Default: ''
-ExplicitAuthFlows:
-  Type: CommaDelimitedList
-  Default: ''
+
+AllowedOAuthFlowsUserPoolClient: 'True'
+AllowedOAuthScopes: ''
+CallbackURLs: 'https://localhost:4200'
+DefaultRedirectURI: 'https://localhost:4200'
+LogoutURLs: 'https://localhost:4200'
+ReadAttributes: ''
+RefreshTokenValidity: 0
+SupportedIdentityProviders: 'idp,auth0'
+WriteAttributes: ''
+ExplicitAuthFlows: ''
