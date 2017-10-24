@@ -4,10 +4,7 @@ UserPoolId:
   Type: String
 AllowedOAuthFlowsUserPoolClient: 
   Type: String
-  Default: True
-  AllowedValues:
-    - True
-    - False
+  Default: 'True'
 AllowedOAuthScopes:
   Type: CommaDelimitedList
   Default: ''
@@ -26,8 +23,8 @@ ReadAttributes:
   Type: CommaDelimitedList
   Default: ''
 RefreshTokenValidity: 
-  Type: Number
-  Default: 0
+  Type: String
+  Default: '0'
 SupportedIdentityProviders:
   Type: CommaDelimitedList
   Default: 'idp,auth0'
