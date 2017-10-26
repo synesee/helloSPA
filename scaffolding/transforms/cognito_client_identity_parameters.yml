@@ -1,5 +1,5 @@
 AllowedOAuthFlowsUserPoolClient: true
-AllowedOAuthScopes: 'email,phone,profile,Cognito'
+AllowedOAuthScopes: 'email,phone,profile,Cognito,openid'
 CallbackURLs: 'https://localhost:4200'
 DefaultRedirectURI: 'https://localhost:4200'
 LogoutURLs: 'https://localhost:4200'
