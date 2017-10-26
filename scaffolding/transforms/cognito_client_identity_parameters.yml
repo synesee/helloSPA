@@ -1,6 +1,5 @@
-
-AllowedOAuthFlowsUserPoolClient: 'True'
-AllowedOAuthScopes: ''
+AllowedOAuthFlowsUserPoolClient: true
+AllowedOAuthScopes: 'email,phone,profile,Cognito'
 CallbackURLs: 'https://localhost:4200'
 DefaultRedirectURI: 'https://localhost:4200'
 LogoutURLs: 'https://localhost:4200'
@@ -9,3 +8,4 @@ RefreshTokenValidity: 0
 SupportedIdentityProviders: 'idp,auth0'
 WriteAttributes: ''
 ExplicitAuthFlows: ''
+AllowedOAuthFlows: 'code,implicit.client_credentials'
