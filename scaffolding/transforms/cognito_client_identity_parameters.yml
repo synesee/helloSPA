@@ -8,4 +8,4 @@ RefreshTokenValidity: 0
 SupportedIdentityProviders: 'idp,auth0'
 WriteAttributes: ''
 ExplicitAuthFlows: ''
-AllowedOAuthFlows: 'code,implicit.client_credentials'
+AllowedOAuthFlows: 'code,implicit,client_credentials'
