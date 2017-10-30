@@ -24,8 +24,7 @@ phases:
       - "[[ -d ../src ]] || echo 'Missing src dir'"
       - "[[ -d ../scaffolding ]] || echo 'Missing scaffolding dir'"
       - "[[ -d ../package ]] || echo 'Missing package dir'"
-      - "echo\"
-        export const environment = {
+      - "echo \"export const environment = {
         production: false,
         region: us-east-1,
         identityPoolId: not_used_right_now,
