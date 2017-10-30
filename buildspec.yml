@@ -1,6 +1,9 @@
 version: 0.2
 
 #$CODEBUILD_SRC_DIR is is a given env var
+#$CognitoUserPoolId is is a given env var
+#$CognitoUserPoolArn is is a given env var
+#$CognitoClientId is is a given env var
 
 env:
   variables:
@@ -22,6 +25,14 @@ phases:
       - "[[ -d ../src ]] || echo 'Missing src dir'"
       - "[[ -d ../scaffolding ]] || echo 'Missing scaffolding dir'"
       - "[[ -d ../package ]] || echo 'Missing package dir'"
+      - "\"echo |
+        export const environment = {
+        production: false,
+        region: us-east-1,
+        identityPoolId: not_used_right_now,
+        userPoolId: ${CognitoUserPoolId},
+        clientId: ${CognitoClientId}};\" > ../src/src/environments/environment.ts"
+
   build:
     commands:
       - echo "build command..."
