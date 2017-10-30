@@ -27,10 +27,10 @@ phases:
       - "echo\"
         export const environment = {
         production: false,
-        region: 'us-east-1',
-        identityPoolId: 'not_used_right_now',
-        userPoolId: '${COGNITO_USER_POOL_ID}',
-        clientId: '${COGNITO_CLIENT_ID}};'\"> ../src/src/environments/environment.ts"
+        region: us-east-1,
+        identityPoolId: not_used_right_now,
+        userPoolId: ${COGNITO_USER_POOL_ID},
+        clientId: ${COGNITO_CLIENT_ID}};\"> ../src/src/environments/environment.ts"
 
   build:
     commands:
