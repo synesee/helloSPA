@@ -41,7 +41,6 @@ phases:
       - cd ..
       - mkdir ./package/swagger-ui
       - mkdir ./package/environments
-      - mkdir ./package/meta_saml_providers
       - cp -r ./src/src/swagger-ui/* ./package/swagger-ui/
      # - sed  -n '/BEGIN SWAGGER/,/END SWAGGER/{/END SWAGGER/!p}' ./scaffolding/transforms/swagger_v2.yml > ./package/swagger-ui/swagger.yml
      # - export s='!Ref CognitoId'
@@ -49,8 +48,7 @@ phases:
      # - sed -i "s/$s/$r/g" *
       - cp -r ./src/src/environments/* ./package/environments/
       - cp -R ./src/dist/* ./package/
-      - cp -r ./scaffolding/* ./package/
-      - cp -r ./meta_saml_providers/* ./package/meta_saml_providers/
+      - cp -R ./scaffolding/* ./package/
 artifacts:
   files:
     - ./package/**/*
