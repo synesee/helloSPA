@@ -43,7 +43,6 @@ phases:
       - mkdir ./package/environments
       - mkdir ./package/meta_saml_providers
       - cp -r ./src/src/swagger-ui/* ./package/swagger-ui/
-      - cp -r ./src/src/swagger-ui/* ./package/swagger-ui/
      # - sed  -n '/BEGIN SWAGGER/,/END SWAGGER/{/END SWAGGER/!p}' ./scaffolding/transforms/swagger_v2.yml > ./package/swagger-ui/swagger.yml
      # - export s='!Ref CognitoId'
      # - "export r=$(aws cognito-idp list-user-pools --max-results=1 | grep Id | sed 's#\"Id\": \".##' | sed 's#\",.##')"
@@ -51,7 +50,7 @@ phases:
       - cp -r ./src/src/environments/* ./package/environments/
       - cp -R ./src/dist/* ./package/
       - cp -r ./scaffolding/* ./package/
-      - cp -r ./src/meta_saml_providers/* ./package/meta_saml_providers/
+      - cp -r ./meta_saml_providers/* ./package/meta_saml_providers/
 artifacts:
   files:
     - ./package/**/*
