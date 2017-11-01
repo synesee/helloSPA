@@ -1,6 +1,6 @@
 
 "use strict";
-
+//hello commmit change
 var AWS = require("aws-sdk");  // Always include if you want to have access to AWS Resources
 AWS.config.update({region: 'us-east-1'}); // Necessary or function will fail on call to some AWS Resources (Could be ENV var?)
 
