@@ -27,7 +27,7 @@ phases:
       - "echo \"export const environment = {
         production: false,
         region: us-east-1,
-        identityPoolId: not_used_right_now,
+        identityPoolId: ${COGNITO_IDENTITY_POOL_ID},
         userPoolId: ${COGNITO_USER_POOL_ID},
         clientId: ${COGNITO_CLIENT_ID}
         };\" > ../src/src/environments/environment.ts"
