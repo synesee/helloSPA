@@ -1,11 +1,19 @@
 AllowedOAuthFlowsUserPoolClient: true
-AllowedOAuthScopes: 'email,phone,profile,Cognito,openid'
+AllowedOAuthScopes: 
+  - email
+  - phone
+  - profile
+  - openid
 CallbackURLs: 'https://localhost:4200'
 DefaultRedirectURI: 'https://localhost:4200'
 LogoutURLs: 'https://localhost:4200'
 ReadAttributes: ''
 RefreshTokenValidity: 0
-SupportedIdentityProviders: 'idp,auth0'
+SupportedIdentityProviders: 
+  - idp
+  - auth0
 WriteAttributes: ''
 ExplicitAuthFlows: ''
-AllowedOAuthFlows: 'code,implicit'
+AllowedOAuthFlows: 
+  - code
+  - implicit
