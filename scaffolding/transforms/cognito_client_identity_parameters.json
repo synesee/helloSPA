@@ -10,9 +10,6 @@
 	"LogoutURLs": ["https://localhost:4200"],
 	"ReadAttributes": [],
 	"RefreshTokenValidity": 0,
-	"SupportedIdentityProviders": [
-		"idp",
-		"auth0"],
 	"WriteAttributes": [],
 	"ExplicitAuthFlows": [],
 	"AllowedOAuthFlows": [
