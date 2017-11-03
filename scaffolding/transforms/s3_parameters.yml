@@ -1,5 +1,0 @@
-# if this was in a bucket unique to an applicaiton repo and not a 
-# common shared bucket, we could use this. 
-#SnsArn: false
-#LambdaArn: false
-SqsArn: "false"
